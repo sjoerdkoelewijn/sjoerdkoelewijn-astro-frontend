@@ -1,0 +1,17 @@
+---
+import TestimonialSlider from './TestimonialSlider.tsx';
+import { getTestimonials } from '../lib/content';
+
+interface Props { heading: string; body: string; }
+const { heading, body } = Astro.props;
+const testimonials = await getTestimonials();
+---
+<div class="block testimonials alignfull">
+  <div class="inner-wrap">
+    <div class="block-heading">
+      <h2>{heading}</h2>
+      <p>{body}</p>
+    </div>
+  </div>
+  <TestimonialSlider client:visible items={testimonials} />
+</div>

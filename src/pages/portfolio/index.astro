@@ -1,0 +1,27 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PortfolioCard from '../../components/PortfolioCard.astro';
+import { getPortfolioIndex, getPortfolioItems } from '../../lib/content';
+
+const page = await getPortfolioIndex();
+const items = await getPortfolioItems();
+---
+<Layout
+  title={page.seo.title || 'Portfolio - Sjoerd Koelewijn'}
+  description={page.seo.description}
+  bodyClass="index portfolio"
+  footerImage={page.footerImage}
+>
+  <div class="hero alignfull">
+    <div class="inner-wrap">
+      <div class="intro">
+        <h1 class="heading">{page.heading}</h1>
+        <p>{page.intro}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="portfolio-grid">
+    {items.map((p: any) => <PortfolioCard slug={p.slug} card={p.card} />)}
+  </div>
+</Layout>

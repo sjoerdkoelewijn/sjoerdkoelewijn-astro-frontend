@@ -1,0 +1,22 @@
+---
+import Logo from './Logo.astro';
+import { getGlobal } from '../lib/content';
+
+const { nav } = await getGlobal();
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => href === '/' ? path === '/' : path.startsWith(href);
+---
+<header class="site-header alignfull" data-scrolled="false">
+  <div class="inner-wrap">
+    <Logo />
+    <div class="menu-wrap">
+      <nav class="top-menu">
+        {nav.map((n: any) => (
+          <a href={n.href} class={`menu-link ${isCurrent(n.href) ? 'current' : ''}`} aria-label={n.ariaLabel}>{n.label}</a>
+        ))}
+      </nav>
+      <!-- React MobileMenu portals its hamburger toggle into this slot -->
+      <span id="sidebar-toggle-slot"></span>
+    </div>
+  </div>
+</header>

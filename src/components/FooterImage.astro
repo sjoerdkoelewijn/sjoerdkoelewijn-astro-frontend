@@ -1,0 +1,12 @@
+---
+import StrapiImage from './StrapiImage.astro';
+import type { StrapiImage as Img } from '../lib/content';
+
+interface Props { image: Img | null; }
+const { image } = Astro.props;
+---
+{image && (
+  <div class="footer-image alignfull">
+    <StrapiImage image={image} formats={['webp']} widths={[1920, 3840]} sizes="100vw" loading="lazy" />
+  </div>
+)}

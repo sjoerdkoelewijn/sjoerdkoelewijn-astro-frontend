@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StrapiImage from '../components/StrapiImage.astro';
+import { getContact, nl2br } from '../lib/content';
+
+const page = await getContact();
+---
+<Layout
+  title={page.seo.title}
+  description={page.seo.description}
+  bodyClass="contact"
+  footerImage={page.footerImage}
+>
+  <section class="hero">
+    <div class="inner-wrap">
+      <div class="block left">
+        <h1 class="heading">{page.left.heading}</h1>
+        <div class="content">
+          <p set:html={nl2br(page.left.body)} />
+        </div>
+        <a class="button" href={page.left.button.href}>{page.left.button.label}</a>
+      </div>
+
+      <div class="block background right">
+        {page.right.avatar && (
+          <StrapiImage class="avatar-image" image={page.right.avatar} widths={[140]} sizes="70px" />
+        )}
+        <h2 class="heading">{page.right.name}</h2>
+        <div class="content">
+          <p>{page.right.body}</p>
+        </div>
+        <div class="external-links">
+          {page.right.externalLinks.map((l: any) => (
+            <a href={l.href} class={`external-link ${l.type}`} rel="noopener noreferrer">{l.label}</a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

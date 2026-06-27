@@ -1,0 +1,287 @@
+@layer base {
+  /*************************** Fonts (Plus Jakarta Sans, variable) ****************************************************************************/
+  /* latin-ext italic */
+  @font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-style: italic;
+    font-weight: 200 800;
+    font-display: swap;
+    src: url(/fonts/latin-ext-italic.woff2) format('woff2');
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin italic */
+  @font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-style: italic;
+    font-weight: 200 800;
+    font-display: swap;
+    src: url(/fonts/latin-italic.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  /* latin-ext */
+  @font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 200 800;
+    font-display: swap;
+    src: url(/fonts/latin-ext-regular.woff2) format('woff2');
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 200 800;
+    font-display: swap;
+    src: url(/fonts/latin-regular.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+  :root {
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+
+    --font-heading-weight: 900;
+    --font-body-weight: 400;
+    --font-body-lineheight: 1.6em;
+    --base-font-body-size: 2rem;
+
+    --base-font-heading-size-h1: 6.5rem;
+    --base-font-heading-size-h2: 5rem;
+    --base-font-heading-size-h3: 5rem;
+    --base-font-heading-size-h4: 3.5rem;
+    --base-font-heading-size-h5: 2.5rem;
+    --base-font-heading-size-h6: 2rem;
+
+    --font-heading-size-h1: var(--base-font-heading-size-h1);
+    --font-heading-size-h2: var(--base-font-heading-size-h2);
+    --font-heading-size-h3: var(--base-font-heading-size-h3);
+    --font-heading-size-h4: var(--base-font-heading-size-h4);
+    --font-heading-size-h5: var(--base-font-heading-size-h5);
+    --font-heading-size-h6: var(--base-font-heading-size-h6);
+
+    --font-body-size: var(--base-font-body-size);
+
+    --font-heading-lineheight: 1.1em;
+    --header-letter-spacing: -0.04em;
+  }
+
+  @media (width <= 1100px) {
+    :root {
+      --base-font-body-size: 2rem;
+      --font-heading-lineheight: 1.2em;
+      --font-body-lineheight: 1.5em;
+    }
+  }
+
+  @media (width <= 800px) {
+    :root {
+      --base-font-heading-size-h1: 5rem;
+      --base-font-heading-size-h2: 3.5rem;
+      --base-font-heading-size-h3: 3.3rem;
+      --base-font-heading-size-h4: 2.5rem;
+      --base-font-heading-size-h5: 2rem;
+      --base-font-heading-size-h6: 1.8rem;
+
+      --base-font-body-size: 1.65rem;
+      --font-body-lineheight: 1.45em;
+
+      --font-heading-weight: 700;
+      --font-body-weight: 300;
+    }
+  }
+
+  @media (width <= 450px) {
+    :root {
+      --base-font-heading-size-h1: 3.5rem;
+      --base-font-heading-size-h2: 2.5rem;
+      --base-font-heading-size-h3: 2rem;
+      --base-font-heading-size-h4: 1.8rem;
+      --base-font-heading-size-h5: 1.8rem;
+      --base-font-heading-size-h6: 1.6rem;
+
+      --base-font-body-size: 1.6rem;
+      --font-body-lineheight: 1.5em;
+      --font-heading-lineheight: 1.3em;
+    }
+  }
+
+  .fontsize-xsmall {
+    --font-heading-size-h1: calc(var(--base-font-heading-size-h1) * 0.83);
+    --font-heading-size-h2: calc(var(--base-font-heading-size-h2) * 0.82);
+    --font-heading-size-h3: calc(var(--base-font-heading-size-h3) * 0.8);
+    --font-heading-size-h4: calc(var(--base-font-heading-size-h4) * 0.71);
+    --font-heading-size-h5: calc(var(--base-font-heading-size-h5) * 0.6);
+    --font-heading-size-h6: calc(var(--base-font-heading-size-h6) * 0.6);
+    --font-body-size: calc(var(--base-font-body-size) * 0.8);
+  }
+
+  .fontsize-small {
+    --font-heading-size-h1: calc(var(--base-font-heading-size-h1) * 0.9);
+    --font-heading-size-h2: calc(var(--base-font-heading-size-h2) * 0.9);
+    --font-heading-size-h3: calc(var(--base-font-heading-size-h3) * 0.9);
+    --font-heading-size-h4: calc(var(--base-font-heading-size-h4) * 0.9);
+    --font-heading-size-h5: calc(var(--base-font-heading-size-h5) * 0.9);
+    --font-heading-size-h6: calc(var(--base-font-heading-size-h6) * 0.9);
+    --font-body-size: calc(var(--base-font-body-size) * 0.9);
+  }
+
+  .fontsize-large {
+    --font-heading-size-h1: calc(var(--base-font-heading-size-h1) * 1.08);
+    --font-heading-size-h2: calc(var(--base-font-heading-size-h2) * 1.09);
+    --font-heading-size-h3: calc(var(--base-font-heading-size-h3) * 1.1);
+    --font-heading-size-h4: calc(var(--base-font-heading-size-h4) * 1.14);
+    --font-heading-size-h5: calc(var(--base-font-heading-size-h5) * 1.2);
+    --font-heading-size-h6: calc(var(--base-font-heading-size-h6) * 1.25);
+    --font-body-size: calc(var(--base-font-body-size) * 1.1);
+  }
+
+  .fontsize-xlarge {
+    --font-heading-size-h1: calc(var(--base-font-heading-size-h1) * 1.17);
+    --font-heading-size-h2: calc(var(--base-font-heading-size-h2) * 1.18);
+    --font-heading-size-h3: calc(var(--base-font-heading-size-h3) * 1.2);
+    --font-heading-size-h4: calc(var(--base-font-heading-size-h4) * 1.29);
+    --font-heading-size-h5: calc(var(--base-font-heading-size-h5) * 1.4);
+    --font-heading-size-h6: calc(var(--base-font-heading-size-h6) * 1.5);
+    --font-body-size: calc(var(--base-font-body-size) * 1.2);
+  }
+
+  body {
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    letter-spacing: var(--header-letter-spacing);
+    line-height: var(--font-heading-lineheight);
+  }
+
+  h1 { font-size: var(--font-heading-size-h1); }
+  h2 { font-size: var(--font-heading-size-h2); }
+  h3 { font-size: var(--font-heading-size-h3); }
+  h4 { font-size: var(--font-heading-size-h4); }
+  h5 { font-size: var(--font-heading-size-h5); }
+  h6 { font-size: var(--font-heading-size-h6); }
+
+  p {
+    font-family: var(--font-body);
+    font-size: var(--font-body-size);
+    line-height: var(--font-body-lineheight);
+    font-weight: var(--font-body-weight);
+  }
+  p strong { font-weight: bold; }
+  p i, p em { font-style: italic; }
+
+  /*************************** Layout ****************************************************************************/
+  :root {
+    --spacing-block: clamp(20px, 1.5vw, 80px);
+    --spacing-inline: min(20vh, 10em);
+    --site-width: 60;
+    --vertical-block-padding: max(10vh, 100px);
+  }
+
+  .block.text-block {
+    --vertical-block-padding: max(8vh, 80px);
+  }
+
+  @media (width <= 2200px) { :root { --site-width: 70; } }
+  @media (width <= 1900px) { :root { --site-width: 80; } }
+  @media (width <= 1750px) { :root { --site-width: 90; --spacing-inline: min(10vh, 5em); } }
+  @media (width <= 1023px) { :root { --site-width: 90; --spacing-inline: 20px; } }
+  @media (width <= 800px) {
+    :root { --site-width: 100; --spacing-inline: 10px; --vertical-block-padding: max(3vh, 30px); }
+    .block.text-block { --vertical-block-padding: max(3vh, 30px); }
+  }
+
+  .content-grid, .alignfull {
+    --padding-inline: 2rem;
+    --content-max-width: min(calc(var(--site-width) * 1vw), 100vw);
+    --breakout-max-width: min(((var(--site-width) * 1vw) + 8vw), 100vw);
+    --breakout-size: calc((var(--breakout-max-width) - var(--content-max-width)) / 2);
+
+    display: grid;
+    grid-template-columns:
+      [full-width-start] minmax(var(--padding-inline), 1fr)
+      [breakout-start] minmax(0, var(--breakout-size))
+      [content-start] min(100% - (var(--padding-inline) * 2), var(--content-max-width)) [content-end]
+      minmax(0, var(--breakout-size)) [breakout-end]
+      minmax(var(--padding-inline), 1fr) [full-width-end];
+  }
+
+  .content-grid > :not(.alignwide, .full-width),
+  .full-width > :not(.alignwide, .full-width) {
+    grid-column: content;
+  }
+
+  .alignfull > .inner-wrap {
+    grid-column: content;
+  }
+
+  .content-grid > .alignfull, .alignfull > .alignfull {
+    grid-column: full-width;
+  }
+
+  .content-grid > .alignwide {
+    grid-column: breakout;
+  }
+  @media (width <= 1023px) {
+    .content-grid > .alignwide { grid-column: full-width; }
+  }
+
+  .alignwide p {
+    padding-inline: var(--theme-spacing);
+  }
+
+  /*************************** Colors ****************************************************************************/
+  :root {
+    --color-main: #ffffff;
+    --color-main-dark: #00355a;
+    --color-second: #ff6314;
+    --color-grey: #e1e8ee;
+    --color-grey-light: #fcfcfc;
+    --color-grey-dark: #e1e8ee;
+    --color-white: #ffffff;
+
+    --color-background: #00355a;
+    --color-background-second: #00559f;
+  }
+
+  ::selection {
+    color: var(--color-background);
+    background: var(--color-main);
+  }
+
+  .block.color-blue ::selection {
+    color: var(--color-main);
+    background: var(--color-background);
+  }
+
+  a {
+    color: var(--color-main);
+    transition: color 500ms linear;
+  }
+  a:visited { color: var(--color-main); }
+  a:hover, a:active { transition: color 500ms linear; }
+
+  body {
+    background-color: var(--color-background);
+    position: relative;
+    color: var(--color-main);
+  }
+
+  .block.color-blue {
+    background: var(--color-main);
+    color: var(--color-grey-light);
+  }
+  .block.color-blue a { color: var(--color-grey-light); }
+
+  /*************************** Global animations ****************************************************************************/
+  .image.lazy {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+  }
+  .image.lazy.loaded { opacity: 1; }
+
+  :root { --border-radius: 10px; }
+}

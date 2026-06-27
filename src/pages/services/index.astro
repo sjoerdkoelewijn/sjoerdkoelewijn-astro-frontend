@@ -1,0 +1,42 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import StrapiImage from '../../components/StrapiImage.astro';
+import CtaBlock from '../../components/CtaBlock.astro';
+import TestimonialsBlock from '../../components/TestimonialsBlock.astro';
+import { getServicesIndex, getHome, nl2br } from '../../lib/content';
+
+const page = await getServicesIndex();
+const home = await getHome();
+---
+<Layout title={page.seo.title} description={page.seo.description} bodyClass="index services">
+  <div class="hero alignfull">
+    <div class="inner-wrap">
+      <div class="intro">
+        <h1 class="heading">{page.heading}</h1>
+        <p set:html={nl2br(page.intro)} />
+        <a href={page.button.href} class="button">{page.button.label}</a>
+      </div>
+
+      <div class="services-grid">
+        {page.serviceCards.map((c: any) => (
+          <div class="service-card">
+            <h3 class="heading">{c.heading}</h3>
+            <p>{c.description}</p>
+          </div>
+        ))}
+      </div>
+
+      {page.ctaBlock && (
+        <CtaBlock heading={page.ctaBlock.heading} body={page.ctaBlock.body} button={page.ctaBlock.button} subText={page.ctaBlock.subText} />
+      )}
+    </div>
+
+    {page.heroImage && (
+      <div class="hero-image">
+        <StrapiImage image={page.heroImage} formats={['webp']} widths={[1920, 3840]} sizes="100vw" class="image" loading="eager" />
+      </div>
+    )}
+  </div>
+
+  <TestimonialsBlock heading={home.testimonialsBlock.heading} body={home.testimonialsBlock.body} />
+</Layout>

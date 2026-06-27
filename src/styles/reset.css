@@ -1,0 +1,120 @@
+/* Layer order is declared here (first imported file) so it is stable regardless of bundling order. */
+@layer reset, base, components, overrides;
+
+@layer reset {
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+    font: inherit;
+  }
+
+  *,
+  *:focus,
+  *:hover,
+  *:focus-visible {
+    outline: none;
+  }
+
+  ul[class],
+  ol[class] {
+    padding: 0;
+  }
+
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  ul[class],
+  ol[class],
+  li,
+  figure,
+  figcaption,
+  blockquote,
+  dl,
+  dd {
+    margin: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    font-family: sans-serif;
+    font-size: 62.5%;
+  }
+
+  body {
+    max-width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    scroll-behavior: smooth;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+    margin: 0;
+    font-size: 1.6rem;
+  }
+
+  ul[class],
+  ol[class] {
+    list-style: none;
+  }
+
+  a:not([class]) {
+    -webkit-text-decoration-skip: ink;
+    text-decoration-skip-ink: auto;
+  }
+
+  img {
+    vertical-align: middle;
+    max-width: 100%;
+    height: auto;
+    font-style: italic;
+    -o-object-fit: cover;
+    object-fit: cover;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  button {
+    border: 0;
+    cursor: pointer;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-wrap: balance;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+---
+interface Props {
+  heading: string;
+  body: string;
+  button: { label: string; href: string };
+  subText?: string;
+}
+const { heading, body, button, subText } = Astro.props;
+---
+<div class="cta-block">
+  <h2 class="heading">{heading}</h2>
+  <p>{body}</p>
+  <a href={button.href} class="button">{button.label}</a>
+  {subText && <span class="sub-text"><p>{subText}</p></span>}
+</div>

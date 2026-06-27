@@ -1,0 +1,30 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getServices, getService } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const services = await getServices();
+  return services.map((s: any) => ({ params: { slug: s.slug } }));
+}
+
+const { slug } = Astro.params;
+const service = await getService(slug as string);
+if (!service) return Astro.redirect('/404');
+
+// Original pages are empty stubs (services act mainly as tags). Replicated 1:1.
+const titleCase = (slug as string).replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+---
+<Layout title={`${titleCase} - Sjoerd Koelewijn`} bodyClass="single service">
+  <div class="hero alignfull">
+    <div class="inner-wrap">
+      <div class="intro-wrap">
+        <div class="intro">
+          <h1 class="heading">{service.heading}</h1>
+        </div>
+        <div class="services">
+          <div class="inner"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

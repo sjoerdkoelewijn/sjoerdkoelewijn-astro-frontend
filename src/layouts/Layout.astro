@@ -1,0 +1,131 @@
+---
+import { getImage } from 'astro:assets';
+import '../styles/reset.css';
+import '../styles/base.css';
+import '../styles/components.css';
+import Header from '../components/Header.astro';
+import FooterImage from '../components/FooterImage.astro';
+import MobileMenu from '../components/MobileMenu.tsx';
+import { getGlobal, type StrapiImage } from '../lib/content';
+
+const { nav, sidebar, social } = await getGlobal();
+const avatar = sidebar.avatar
+  ? (await getImage({ src: sidebar.avatar.url, width: 160, height: 160, format: 'webp', inferSize: false })).src
+  : '';
+
+interface Props {
+  title: string;
+  description?: string;
+  bodyClass?: string;
+  footerImage?: StrapiImage | null;
+  ogImage?: string;
+}
+const {
+  title,
+  description = 'I am freelance designer and web developer who specializes in working directly with business owners to improve their websites UX and increase conversions.',
+  bodyClass = '',
+  footerImage = null,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+<!DOCTYPE html>
+<html lang="en-US" data-sidebar-visible="false">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <link rel="icon" href="/favicon.png" type="image/x-icon" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="sjoerdkoelewijn" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="preload" href="/fonts/latin-regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  </head>
+
+  <body class={bodyClass}>
+    <Header />
+
+    <main class="content-grid">
+      <slot />
+    </main>
+
+    {footerImage && <FooterImage image={footerImage} />}
+
+    <MobileMenu
+      client:load
+      nav={nav}
+      social={social}
+      avatarSrc={avatar}
+      name={sidebar.name}
+      description={sidebar.description}
+      button={sidebar.button}
+    />
+
+    <script>
+      // Lazy image fade-in + sticky header scroll state (ports script.bundle.js)
+      const initBase = () => {
+        document.querySelectorAll('.image.lazy').forEach((el) => {
+          const im = el as HTMLImageElement;
+          if (im.complete) im.classList.add('loaded');
+          else im.addEventListener('load', () => im.classList.add('loaded'));
+        });
+        const header = document.querySelector('[data-scrolled]') as HTMLElement | null;
+        if (header) {
+          const onScroll = () => { header.dataset.scrolled = window.scrollY > 0 ? 'true' : 'false'; };
+          window.addEventListener('scroll', onScroll, { passive: true });
+          onScroll();
+        }
+      };
+      if (document.readyState !== 'loading') initBase();
+      else document.addEventListener('DOMContentLoaded', initBase);
+    </script>
+
+    <script>
+      // Portfolio entrance animation: each .portfolio-item slides/fades in (with a slight
+      // bounce, mirroring the original's gsap bounce.out) as it enters the viewport.
+      // Uses IntersectionObserver so items are NEVER left permanently hidden: anything
+      // already in view stays visible, items below the fold reveal once scrolled in.
+      // Skipped entirely under prefers-reduced-motion and when JS/IO is unavailable.
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const initPortfolio = () => {
+        const items = Array.from(document.querySelectorAll('.portfolio-item'));
+        if (!items.length || reduceMotion || !('IntersectionObserver' in window)) return;
+        const io = new IntersectionObserver((entries, obs) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            const el = e.target as HTMLElement;
+            el.classList.remove('reveal-init');
+            el.classList.add('reveal-in');
+            // After the entrance, drop the helper classes so hover transforms work normally.
+            setTimeout(() => el.classList.remove('reveal-in'), 700);
+            obs.unobserve(el);
+          });
+        }, { rootMargin: '0px 0px -40px 0px', threshold: 0.01 });
+
+        items.forEach((el) => {
+          const r = el.getBoundingClientRect();
+          const inView = r.top < window.innerHeight && r.bottom > 0;
+          if (!inView) { el.classList.add('reveal-init'); io.observe(el); }
+        });
+      };
+      if (!reduceMotion) {
+        if (document.readyState !== 'loading') initPortfolio();
+        else document.addEventListener('DOMContentLoaded', initPortfolio);
+      }
+    </script>
+  </body>
+</html>

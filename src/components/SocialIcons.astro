@@ -1,0 +1,11 @@
+---
+import { getGlobal } from '../lib/content';
+const order = ['codepen', 'github', 'linkedin'];
+const { social } = await getGlobal();
+const sorted = [...social].sort((a: any, b: any) => order.indexOf(a.type) - order.indexOf(b.type));
+---
+<div class="social-icons">
+  {sorted.map((s: any) => (
+    <a href={s.href} class={`icon ${s.type}`} aria-label={s.label}></a>
+  ))}
+</div>

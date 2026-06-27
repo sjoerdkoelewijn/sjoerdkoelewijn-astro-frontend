@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StrapiImage from '../components/StrapiImage.astro';
+import PortfolioCard from '../components/PortfolioCard.astro';
+import TestimonialsBlock from '../components/TestimonialsBlock.astro';
+import SocialIcons from '../components/SocialIcons.astro';
+import { getHome, getPortfolioItems, getGlobal, richInline } from '../lib/content';
+
+const home = await getHome();
+const items = await getPortfolioItems();
+const { sidebar } = await getGlobal();
+const avatar = sidebar.avatar;
+---
+<Layout
+  title={home.seo.title}
+  description={home.seo.description}
+  bodyClass="home"
+  footerImage={home.footerImage}
+>
+  <section class="hero alignfull">
+    {home.hero.image && (
+      <div class="hero-image">
+        <StrapiImage image={home.hero.image} formats={['webp']} widths={[1920, 3840]} sizes="100vw" class="image" loading="eager" />
+      </div>
+    )}
+
+    <div class="inner-wrap">
+      <div class="text-block">
+        <p class="hello">
+          {avatar && <StrapiImage image={{ ...avatar, alt: "Hello! I'm Sjoerd" }} widths={[100]} sizes="50px" />}
+          {home.hero.hello}
+        </p>
+        <h1 class="heading">{home.hero.heading}</h1>
+        <div class="button-wrap">
+          {home.hero.buttons.map((b: any) => (
+            <a class={`hero-cta button ${b.ghost ? 'ghost' : ''}`} href={b.href}>{b.label}</a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-text alignfull">
+      <div class="inner-wrap">
+        <h2 class="heading">{home.heroText.heading}</h2>
+        <div class="content">
+          <p set:html={richInline(home.heroText.body)} />
+          <div class="name">{home.heroText.name}</div>
+          <SocialIcons />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="block portfolio alignfull">
+    <div class="inner-wrap">
+      <div class="block-heading">
+        <h2 class="heading">{home.portfolioBlock.heading}</h2>
+        <p>{home.portfolioBlock.body}</p>
+      </div>
+      <div class="portfolio-grid">
+        {items.map((p: any) => <PortfolioCard slug={p.slug} card={p.card} />)}
+      </div>
+    </div>
+  </div>
+
+  <TestimonialsBlock heading={home.testimonialsBlock.heading} body={home.testimonialsBlock.body} />
+</Layout>

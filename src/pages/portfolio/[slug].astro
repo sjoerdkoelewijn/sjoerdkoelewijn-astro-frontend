@@ -1,0 +1,51 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import StrapiImage from '../../components/StrapiImage.astro';
+import CtaBlock from '../../components/CtaBlock.astro';
+import { getPortfolioItems, getPortfolioItem, getGlobal } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const items = await getPortfolioItems();
+  return items.map((p: any) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const item = await getPortfolioItem(slug as string);
+if (!item) return Astro.redirect('/404');
+const { cta } = await getGlobal();
+---
+<Layout
+  title={item.seo.title || `${item.heading} - Sjoerd Koelewijn`}
+  description={item.seo.description}
+  bodyClass="single portfolio"
+>
+  <div class="hero alignfull">
+    <div class="inner-wrap">
+      <div class="intro-wrap">
+        <div class="intro">
+          <h1 class="heading">{item.heading}</h1>
+          {item.intro && <p>{item.intro}</p>}
+        </div>
+        {item.services?.length > 0 && (
+          <div class="services">
+            <div class="inner">
+              {item.services.map((s: string) => (
+                <a href="/services" class="service-item">{s}</a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+
+  {item.images?.map((image: any, i: number) => (
+    <div class="image-block">
+      <StrapiImage image={image} widths={[400, 800, 1500]}
+        sizes="(max-width: 600px) 400px, (max-width: 1500px) 800px, 1500px"
+        class={`image ${i === 0 ? '' : 'lazy'}`} loading={i === 0 ? 'eager' : 'lazy'} />
+    </div>
+  ))}
+
+  {cta && <CtaBlock heading={cta.heading} body={cta.body} button={cta.button} subText={cta.subText} />}
+</Layout>

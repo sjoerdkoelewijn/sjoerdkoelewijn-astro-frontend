@@ -1,0 +1,27 @@
+---
+import StrapiImage from './StrapiImage.astro';
+import type { StrapiImage as Img } from '../lib/content';
+
+interface Props {
+  slug: string;
+  card: { heading: string; description: string; ctaText: string; firstImage: Img | null; secondImage: Img | null };
+}
+const { slug, card } = Astro.props;
+---
+<a href={`/portfolio/${slug}`} class="portfolio-item">
+  <div class="content">
+    <h3 class="heading">{card.heading}</h3>
+    <p>{card.description}</p>
+    <div class="ctaText">{card.ctaText}</div>
+  </div>
+  <div class="images">
+    {card.firstImage && (
+      <StrapiImage class="firstImage" image={card.firstImage} widths={[400, 1200]}
+        sizes="(max-width: 767px) 400px, 1200px" loading="lazy" />
+    )}
+    {card.secondImage && (
+      <StrapiImage class="secondImage" image={card.secondImage} widths={[400, 1200]}
+        sizes="(max-width: 767px) 400px, 1200px" loading="lazy" />
+    )}
+  </div>
+</a>

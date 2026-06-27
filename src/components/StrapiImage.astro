@@ -1,0 +1,33 @@
+---
+import { Picture } from 'astro:assets';
+import type { StrapiImage } from '../lib/content';
+
+interface Props {
+  image: StrapiImage | null;
+  class?: string;
+  sizes?: string;
+  widths?: number[];
+  loading?: 'eager' | 'lazy';
+  formats?: ('avif' | 'webp')[];
+}
+const { image, class: cls, sizes, widths, loading = 'lazy', formats = ['avif', 'webp'] } = Astro.props;
+
+// Clamp requested widths to the original width (avoid upscaling) and always include it.
+const ws = image
+  ? Array.from(new Set([...(widths ?? [image.width]).filter((w) => w <= image.width), image.width])).sort((a, b) => a - b)
+  : [];
+---
+{image && (
+  <Picture
+    src={image.url}
+    width={image.width}
+    height={image.height}
+    widths={ws}
+    sizes={sizes ?? `${image.width}px`}
+    formats={formats}
+    fallbackFormat="jpeg"
+    class={cls}
+    alt={image.alt}
+    loading={loading}
+  />
+)}
